@@ -1,19 +1,8 @@
-﻿using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace LacoDoWhile;
 
-/// <summary>
-/// Interaction logic for MainWindow.xaml
-/// </summary>
 public partial class MainWindow : Window
 {
     public MainWindow()
@@ -24,8 +13,23 @@ public partial class MainWindow : Window
 
     private void ComecarSortear(object sender, RoutedEventArgs e)
     {
-        string numeroDigitado = tbNumeroEscolhido.Text;
-        int numeroDigitadoConvertido = Convert.ToInt32(numeroDigitado);
+        var numeroDigitado = tbNumeroEscolhido.Text;
+
+        int numeroDigitadoConvertido;
+        try
+        {
+            numeroDigitadoConvertido = Convert.ToInt32(numeroDigitado);
+        }
+        catch (FormatException)
+        {
+            MessageBox.Show("Entrada invalida! Digite apenas números.");
+            return;
+        }
+        catch (OverflowException)
+        {
+            MessageBox.Show("Numero digitado é maior que o suportado!");
+            return;
+        }
 
         if (numeroDigitadoConvertido < 0 || numeroDigitadoConvertido > 10)
         {
@@ -35,7 +39,7 @@ public partial class MainWindow : Window
 
         int numeroEscolhidoMaquina;
         var sorteador = new Random();
-        int contador = 0;
+        var contador = 0;
 
         do
         {
